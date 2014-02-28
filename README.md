@@ -1,10 +1,12 @@
 # kata-bank-ocr
 
-A Clojure library designed to ... well, that part is up to you.
+src/kata_bank_ocr/core.clj contains the code
+
+Tests are located
+
+test/kata_bank_ocr/core_test.clj
 
 ## Usage
-
-FIXME
 
 ## License
 
