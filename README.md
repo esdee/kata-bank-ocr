@@ -1,6 +1,8 @@
 # kata-bank-ocr
 
-src/kata_bank_ocr/core.clj contains the code
+Code is located
+
+src/kata_bank_ocr/core.clj
 
 Tests are located
 
