@@ -19,8 +19,7 @@
    Each account number line is a seq of 3 27 character strings"
   [file-location]
   (with-open [rdr (io/reader file-location)]
-    (doall (partition 3 4 (line-seq rdr)))
-    ))
+    (doall (partition 3 4 (line-seq rdr)))))
 
 (defn account-lines->account-number
   [line]
@@ -31,5 +30,13 @@
                         ;; (0 3 6 ... 24)
                         (take-nth 3 (range 27)))]
     (map number-map characters)))
+
+(defn valid?
+  "Returns true if the account number is valid"
+  [account-number]
+  (let [checksum (->> (reverse account-number)
+                      (map-indexed #(* (inc %1) %2))
+                      (apply +))]
+    (zero? (mod checksum 11))))
 
 
