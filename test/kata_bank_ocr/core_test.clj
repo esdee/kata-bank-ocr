@@ -27,3 +27,27 @@
            (core/valid? '(3 4 5 8 8 2 8 6 5)))))
   (testing "invalid account numbers should not check as valid?"
     (is (false? (core/valid? '(3 4 5 8 8 2 8 6 9))))))
+
+(deftest user-story-3
+  (testing "illegible? returns true on illegible data"
+    (is (true?
+         (core/illegible?
+          (core/account-lines->account-number
+           '(" _  _  _  _  _  _  _  _  _ "
+             "  || || || || || || || || |"
+             "|_||_||_||_||_||_||_||_||_|"))))))
+  (testing "illegible? returns false on legible data"
+    (is (false?
+         (core/illegible?
+          (core/account-lines->account-number
+           '(" _  _  _  _  _  _  _  _  _ "
+             "| || || || || || || || || |"
+             "|_||_||_||_||_||_||_||_||_|"))))))
+  (testing "parsing a file should return the parsed account numbers and their status"
+    (let [file "test/kata_bank_ocr/file2.txt"]
+      (is (= ["000000000"
+              "111111111 ERR"
+              "000000051"
+              "49006771? ILL"
+              "1234?678? ILL"]
+             (core/parse-file file))))))

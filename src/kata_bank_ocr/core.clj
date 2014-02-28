@@ -39,4 +39,26 @@
                       (apply +))]
     (zero? (mod checksum 11))))
 
+(defn illegible?
+  [account-number]
+  "Returns true if any character in the account number could not be read"
+  (true? (some nil? account-number)))
+
+(defn parse-file
+  "Given an account number file will return a seq of lines 
+   consisting of the parsed account number and the status"
+  [file-location]
+  (let [->str (fn [acn & status]
+                (let [s (apply str (map #(str (or % "?")) acn))]
+                  (str/trim (str s " " (first status)))))]
+    (->> (file->account-lines file-location)
+         (map account-lines->account-number)
+         (map (fn [acn]
+                (cond
+                 (illegible? acn) (->str acn "ILL")
+                 (valid? acn)     (->str acn)
+                 :else            (->str acn "ERR")))))))
+
+
+
 
