@@ -22,6 +22,9 @@
     (doall (partition 3 4 (line-seq rdr)))))
 
 (defn account-lines->account-number
+  "Parse an account line which is a seq consisting of 3 27 character strings and
+    return a seq of 9 digits that mae up the account number.
+  Illegible characters are returned as nil."
   [line]
   (let [characters (map (fn [index]
                           (let [next3 #(-> % vec (subvec index (+ 3 index)))
