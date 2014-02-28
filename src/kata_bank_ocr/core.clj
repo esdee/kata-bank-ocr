@@ -23,7 +23,7 @@
 
 (defn account-lines->account-number
   "Parse an account line which is a seq consisting of 3 27 character strings and
-    return a seq of 9 digits that mae up the account number.
+    return a seq of 9 digits that make up the account number.
   Illegible characters are returned as nil."
   [line]
   (let [characters (map (fn [index]
