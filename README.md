@@ -1,5 +1,9 @@
 # kata-bank-ocr
 
+Exercise for the first 3 user stories of the code kata
+
+http://www.codingdojo.org/cgi-bin/index.pl?KataBankOCR
+
 Code is located
 
 src/kata_bank_ocr/core.clj
