@@ -1,6 +1,35 @@
-(ns kata-bank-ocr.core)
+(ns kata-bank-ocr.core
+  (require [clojure.java.io :as io]
+           [clojure.string :as str]))
 
-(defn foo
-  "I don't do a whole lot."
-  [x]
-  (println x "Hello, World!"))
+(def number-map
+  {" _ | ||_|" 0
+   "     |  |" 1
+   " _  _||_ " 2
+   " _  _| _|" 3
+   "   |_|  |" 4
+   " _ |_  _|" 5
+   " _ |_ |_|" 6
+   " _   |  |" 7
+   " _ |_||_|" 8
+   " _ |_| _|" 9})
+
+(defn file->account-lines
+  "Parse a account number file to a seq of account-number-lines.
+   Each account number line is a seq of 3 27 character strings"
+  [file-location]
+  (with-open [rdr (io/reader file-location)]
+    (doall (partition 3 4 (line-seq rdr)))
+    ))
+
+(defn account-lines->account-number
+  [line]
+  (let [characters (map (fn [index]
+                          (let [next3 #(-> % vec (subvec index (+ 3 index)))
+                                substr #(apply str (next3 %))] ;; [\| \_ \|] => "|_|"
+                            (apply str (map substr line))))
+                        ;; (0 3 6 ... 24)
+                        (take-nth 3 (range 27)))]
+    (map number-map characters)))
+
+
